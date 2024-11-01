@@ -1,5 +1,5 @@
 #pragma once
-#include "../Lightsync.hpp"
+#include "../lightsync.h"
 
 void(__fastcall *MenuGameLayer_resetPlayer)(MenuGameLayer *);
 void __fastcall MenuGameLayer_resetPlayer_H(MenuGameLayer *_this)

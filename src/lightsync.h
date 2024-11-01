@@ -14,21 +14,14 @@
 
 using namespace cocos2d;
 
-struct iconInfo {
-    int		ID;
-    IconType	type;
-};
-
 #include "Miscellaneous/Utils.h"
 #include "Miscellaneous/LayerExtProtocol.h"
 
-
 #include "Managers/LightsyncManager.hpp"
-
-
 
 #include "Miscellaneous/BackgroundSprite.h"
 #include "Miscellaneous/LSButtonSprite.h"
+#include "Miscellaneous/LSLevelTools.h"
 
 #include "LayerExt/CreatorLayerExt.h"
 #include "LayerExt/MenuLayerExt.h"
@@ -38,6 +31,7 @@ struct iconInfo {
 
 #include "Hooks/HookedCreatorLayer.h"
 #include "Hooks/HookedGameManager.h"
+#include "Hooks/HookedGJGarageLayer.h"
 #include "Hooks/HookedLoadingLayer.h"
 #include "Hooks/HookedMenuGameLayer.h"
 #include "Hooks/HookedMenulayer.h"

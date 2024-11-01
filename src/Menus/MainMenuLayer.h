@@ -1,5 +1,5 @@
 #pragma once
-#include "../Lightsync.hpp"
+#include "../lightsync.h"
 
 class MainMenuLayer : public CCLayer, public FLAlertLayerProtocol {
 public:
@@ -220,7 +220,7 @@ public:
         m_bottomBar = CCNode::create();
         this->addChild(m_bottomBar);
 
-        auto square = CCLayerColor::create(utils::grayScaleColor(10, 255), size.width, 45);
+        auto square = CCLayerColor::create(Utils::grayScaleColor(10, 255), size.width, 45);
         m_bottomBar->addChild(square);
 
         m_bottomMenu = CCMenu::create();
@@ -375,7 +375,7 @@ public:
     void updateTimeLabel() {
 
 	auto size = ccDir->getWinSize();
-	    std::vector<int> systemTime = utils::getSystemTime();
+	    std::vector<int> systemTime = Utils::getSystemTime();
 	    auto hour = systemTime[0];
 
 	    if (gm->getGameVariable("LS-ClockFormat"))
@@ -412,9 +412,9 @@ public:
     }
 
     void updateDateLabel() {
-        auto month = utils::getCurrentMonth();
-        auto day = utils::getCurrentDay();
-        auto year = utils::getCurrentYear() + 1900;
+        auto month = Utils::getCurrentMonth();
+        auto day = Utils::getCurrentDay();
+        auto year = Utils::getCurrentYear() + 1900;
     
 	    if (gm->getGameVariable("LS-dateOrder"))
             m_dateString = fmt::format("{}/{:02}/{}", day, month, year);
@@ -428,7 +428,7 @@ public:
     void onTimeSequence() {
 		this->runAction(
 			CCSequence::create(
-				CCDelayTime::create(60 - utils::getSystemTime()[2]),
+				CCDelayTime::create(60 - Utils::getSystemTime()[2]),
 				CCCallFunc::create(this, callfunc_selector(MainMenuLayer::updateTimeLabel)),
 				CCCallFunc::create(this, callfunc_selector(MainMenuLayer::onTimeSequence)),
 				0

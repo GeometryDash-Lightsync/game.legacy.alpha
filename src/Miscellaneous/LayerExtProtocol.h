@@ -1,5 +1,5 @@
 #pragma once
-#include "../lightsync.hpp"
+#include "../lightsync.h"
 
 #include <type_traits>
 

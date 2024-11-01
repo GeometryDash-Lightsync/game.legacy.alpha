@@ -1,4 +1,4 @@
-#include "../lightsync.hpp"
+#include "../lightsync.h"
 
 
 

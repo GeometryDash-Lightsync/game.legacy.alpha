@@ -1,4 +1,4 @@
-#include "../lightsync.hpp"
+#include "../lightsync.h"
 
 class LoadingLayerExt : public LoadingLayer, LayerExtProtocol<LoadingLayer> {
 public:

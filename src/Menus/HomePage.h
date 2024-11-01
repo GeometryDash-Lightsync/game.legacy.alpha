@@ -1,5 +1,5 @@
 #pragma once
-#include "../lightsync.hpp"
+#include "../lightsync.h"
 
 class HomePage : public CCLayer {
 public:
@@ -21,7 +21,7 @@ public:
         m_canPressKey = true;
         /*    background    */
         
-        auto bg = CCLayerColor::create({ utils::grayScaleColor(20, 255) });
+        auto bg = CCLayerColor::create({ Utils::grayScaleColor(20, 255) });
         this->addChild(bg);
 
         auto size = ccDir->getWinSize();
@@ -114,7 +114,7 @@ public:
 	        )
         );
 
-        auto blackScreen = CCLayerColor::create(utils::grayScaleColor(0, 0));
+        auto blackScreen = CCLayerColor::create(Utils::grayScaleColor(0, 0));
         this->addChild(blackScreen);
 
         blackScreen->runAction(

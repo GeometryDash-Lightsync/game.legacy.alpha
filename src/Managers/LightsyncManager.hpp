@@ -1,5 +1,5 @@
 #pragma once
-#include "../lightsync.hpp"
+#include "../lightsync.h"
 
 class LightsyncManager : public CCNode, FLAlertLayerProtocol
 {
@@ -123,9 +123,9 @@ public:
         }
     }
 
-    void setItemLimit(int value, IconType iconType)
+    void setItemLimit(IconType iconType, int value)
     {
-        BYTE var = utils::intToByte(value);
+        BYTE var = Utils::intToByte(value);
         switch (iconType)
         {
         case IconType::Ship:
@@ -133,25 +133,25 @@ public:
             break;
         case IconType::Ball:
 
-            utils::patchBytes(redecore::getBase() + 0x37C5A3, {0xB8, var}); // idk
+            Utils::patchBytes(redecore::getBase() + 0x37C5A3, {0xB8, var}); // idk
 
-            utils::patchBytes(redecore::getBase() + 0x172C5E, {0x41, 0x83, 0xC0, var}); // GameManager::init
+            Utils::patchBytes(redecore::getBase() + 0x172C5E, {0x41, 0x83, 0xC0, var}); // GameManager::init
 
-            utils::patchBytes(redecore::getBase() + 0x1C7532, {0x44, 0x8D, 0x75, var}); // idk
+            Utils::patchBytes(redecore::getBase() + 0x1C7532, {0x44, 0x8D, 0x75, var}); // idk
 
-            utils::patchBytes(redecore::getBase() + 0x267FD0, {0xBE, var}); // SimplePlayer updatePlayerFrame
+            Utils::patchBytes(redecore::getBase() + 0x267FD0, {0xBE, var}); // SimplePlayer updatePlayerFrame
 
             m_ballLimit = value;
             break;
         case IconType::Ufo:
 
-            utils::patchBytes(redecore::getBase() + 0x37C309, {0xB8, var}); // idk
+            Utils::patchBytes(redecore::getBase() + 0x37C309, {0xB8, var}); // idk
 
-            utils::patchBytes(redecore::getBase() + 0x172C6A, {0x41, 0x81, 0xC0, var}); // GameManager::init
+            Utils::patchBytes(redecore::getBase() + 0x172C6A, {0x41, 0x81, 0xC0, var}); // GameManager::init
 
-            utils::patchBytes(redecore::getBase() + 0x1C7540, {0x41, 0xBE, var}); // idk
+            Utils::patchBytes(redecore::getBase() + 0x1C7540, {0x41, 0xBE, var}); // idk
 
-            utils::patchBytes(redecore::getBase() + 0x267FEF, {0xBE, var}); // SimplePlayer updatePlayerFrame
+            Utils::patchBytes(redecore::getBase() + 0x267FEF, {0xBE, var}); // SimplePlayer updatePlayerFrame
 
             m_ufoLimit = value;
             break;
@@ -169,13 +169,13 @@ public:
             break;
         case IconType::Swing:
 
-            utils::patchBytes(redecore::getBase() + 0x37C7D3, {0xB8, var}); // idk
+            Utils::patchBytes(redecore::getBase() + 0x37C7D3, {0xB8, var}); // idk
 
-            utils::patchBytes(redecore::getBase() + 0x172C9D, {0x41, 0x83, 0xC0, var}); // GameManager::init
+            Utils::patchBytes(redecore::getBase() + 0x172C9D, {0x41, 0x83, 0xC0, var}); // GameManager::init
 
-            utils::patchBytes(redecore::getBase() + 0x1C759A, {0x44, 0x8D, 0x75, var}); // idk
+            Utils::patchBytes(redecore::getBase() + 0x1C759A, {0x44, 0x8D, 0x75, var}); // idk
 
-            utils::patchBytes(redecore::getBase() + 0x268079, {0xBE, var}); // SimplePlayer updatePlayerFrame
+            Utils::patchBytes(redecore::getBase() + 0x268079, {0xBE, var}); // SimplePlayer updatePlayerFrame
 
             m_swingLimit = value;
             break;
@@ -185,27 +185,27 @@ public:
             break;
         case IconType::Special:
 
-            utils::patchBytes(redecore::getBase() + 0x1C756E, {0x44, 0x8D, 0x75, var}); // idk
+            Utils::patchBytes(redecore::getBase() + 0x1C756E, {0x44, 0x8D, 0x75, var}); // idk
 
-            utils::patchBytes(redecore::getBase() + 0x366993, {0x83, 0xFA, var});
-            utils::patchBytes(redecore::getBase() + 0x3669A4, {0xBA, var}); // streak max
+            Utils::patchBytes(redecore::getBase() + 0x366993, {0x83, 0xFA, var});
+            Utils::patchBytes(redecore::getBase() + 0x3669A4, {0xBA, var}); // streak max
 
             m_streakLimit = value;
             break;
         default:
-            auto bytes = utils::intToBytes(value);
+            auto bytes = Utils::intToBytes(value);
 
-            utils::patchBytes(redecore::getBase() + 0x3649B5, {0xB8, bytes[0], bytes[1]}); // PlayerObject init
+            Utils::patchBytes(redecore::getBase() + 0x3649B5, {0xB8, bytes[0], bytes[1]}); // PlayerObject init
 
-            utils::patchBytes(redecore::getBase() + 0x37BC73, {0x41, 0xBE, bytes[0], bytes[1]}); // PlayerObject updatePlayerFrame
+            Utils::patchBytes(redecore::getBase() + 0x37BC73, {0x41, 0xBE, bytes[0], bytes[1]}); // PlayerObject updatePlayerFrame
 
-            utils::patchBytes(redecore::getBase() + 0x26744A, {0xB8, bytes[0], bytes[1]}); // SimplePlayer init
+            Utils::patchBytes(redecore::getBase() + 0x26744A, {0xB8, bytes[0], bytes[1]}); // SimplePlayer init
 
-            utils::patchBytes(redecore::getBase() + 0x2680C2, {0xBE, bytes[0], bytes[1]}); // SimplePlayer updatePlayerFrame
+            Utils::patchBytes(redecore::getBase() + 0x2680C2, {0xBE, bytes[0], bytes[1]}); // SimplePlayer updatePlayerFrame
 
-            utils::patchBytes(redecore::getBase() + 0x172C40, {0x41, 0x81, 0xC0, bytes[0], bytes[1]}); // GameManager::init
+            Utils::patchBytes(redecore::getBase() + 0x172C40, {0x41, 0x81, 0xC0, bytes[0], bytes[1]}); // GameManager::init
 
-            utils::patchBytes(redecore::getBase() + 0x1C7512, {0x41, 0xBE, bytes[0], bytes[1]}); // idk
+            Utils::patchBytes(redecore::getBase() + 0x1C7512, {0x41, 0xBE, bytes[0], bytes[1]}); // idk
             m_cubeLimit = value;
             break;
         }

@@ -1,5 +1,5 @@
 #pragma once
-#include "../lightsync.hpp"
+#include "../lightsync.h"
 
 class MenuLayerExt : public MenuLayer, LayerExtProtocol<MenuLayer> {
 public:

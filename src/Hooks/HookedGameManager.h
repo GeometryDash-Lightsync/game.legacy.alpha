@@ -1,4 +1,4 @@
-#include "../lightsync.hpp"
+#include "../lightsync.h"
 
 int(__fastcall* GameManager_countForType)(GameManager*, IconType);
 int __fastcall GameManager_countForType_H(GameManager* _this, IconType type)

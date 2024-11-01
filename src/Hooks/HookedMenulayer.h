@@ -1,4 +1,4 @@
-#include "../lightsync.hpp"
+#include "../lightsync.h"
 
 bool(__fastcall *MenuLayer_init)(MenuLayerExt *);
 bool __fastcall MenuLayer_init_H(MenuLayerExt *_this)
@@ -42,7 +42,7 @@ bool __fastcall MenuLayer_init_H(MenuLayerExt *_this)
     /* new menu */
 
     _this->m_background = BackgroundSprite::create("GJ_Gradient03.png");
-    _this->m_background->setColor(utils::grayScaleColor(25));
+    _this->m_background->setColor(Utils::grayScaleColor(25));
 
     _this->m_background->setAnchorPoint({.5f, .5f});
     _this->m_background->setPosition(size / 2);

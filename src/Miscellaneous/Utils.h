@@ -1,6 +1,6 @@
-#include "../lightsync.hpp"
+#include "../lightsync.h"
 
-namespace utils {
+namespace Utils {
 
     static ccColor3B grayScaleColor(GLubyte col) { return { col, col, col }; }
 
@@ -65,14 +65,15 @@ namespace utils {
     template <typename FuncType>
 
     static bool CreateHook(uintptr_t address, LPVOID detour, FuncType* original) {
-         if (
-            MH_CreateHook(
+        auto _hook = MH_CreateHook(
                 reinterpret_cast<void*>(address), 
                 detour,
                 reinterpret_cast<void**>(original)
-                 ) != MH_OK) {
-        return false;
-    }
-    return true;
+        );
+
+        if (_hook != MH_OK)
+            return false;
+
+        return true;
     }
 }

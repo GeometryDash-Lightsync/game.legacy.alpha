@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../lightsync.hpp"
+#include "../lightsync.h"
 
 class CreatorLayerExt : public CreatorLayer, LayerExtProtocol<CreatorLayer> {
 public:

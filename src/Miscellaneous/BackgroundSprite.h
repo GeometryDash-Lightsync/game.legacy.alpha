@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Lightsync.hpp"
+#include "../lightsync.h"
 
 class BackgroundSprite : public CCNode
 {
