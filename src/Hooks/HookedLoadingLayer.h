@@ -185,7 +185,8 @@ public:
 
         UnlockType item = gm->IconToUnlock(static_cast<IconType>(m_preloadStep - 8));
 
-        if (m_loadingInfoLabel) m_loadingInfoLabel->setString(fmt::format("Preloading Icons: {}s", gm->getItemName(item)).c_str());
+        if (m_loadingInfoLabel && m_preloadStep < 16) 
+            m_loadingInfoLabel->setString(fmt::format("Preloading Icons: {}s", gm->getItemName(item)).c_str());
 
         switch (m_preloadStep)
         {
@@ -198,9 +199,10 @@ public:
         case 13: Lightsync->loadIcons(IconType::Spider); break;
         case 14: Lightsync->loadIcons(IconType::Swing); break;
         case 15: Lightsync->loadIcons(IconType::Jetpack); break;
+        case 16: LSIconDataManager::sharedState()->setData(); break;     
         }
 
-        if (m_preloadStep < 16) {
+        if (m_preloadStep < 17) {
             m_preloadStep++;
 
             this->runAction(
@@ -230,7 +232,7 @@ void(__fastcall* LoadingLayer_loadAssets)(LoadingLayerExt*);
 void __fastcall LoadingLayer_loadAssets_H(LoadingLayerExt* _this) {
     _this->m_requestAttempts = 0;
 
-    if (!_this->m_fromRefresh && _this->m_preloadStep != 16) _this->checkForUpdates();
+    if (!_this->m_fromRefresh && _this->m_preloadStep != 17) _this->checkForUpdates();
     else LoadingLayer_loadAssets(_this);
 
 }
@@ -239,8 +241,6 @@ bool(__fastcall* LoadingLayer_init)(LoadingLayerExt*, bool);
 bool __fastcall LoadingLayer_init_H(LoadingLayerExt* _this, bool fromRefresh) {
 
     if (!LoadingLayer_init(_this, fromRefresh)) return false;
-
-
 
     Lightsync->m_loadingLayer = _this;
     Lightsync->m_fromReload = fromRefresh;

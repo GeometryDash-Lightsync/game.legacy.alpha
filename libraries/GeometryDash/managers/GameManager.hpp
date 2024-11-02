@@ -264,6 +264,17 @@ public:
         return ret;
     }
 
+    bool isIconUnlockedByDefault(int id, UnlockType type)
+    {
+        if (
+            (type == UnlockType::kCube && id <= 4)
+            || id == 1
+            || ((type == UnlockType::kColor1 || type == UnlockType::kColor2) && id <= 3)
+            )
+            return true;
+    
+        return false;
+    }
 
 	bool isIconUnlocked(int _id, IconType _type) {
 		return reinterpret_cast<bool(__thiscall*)(
@@ -468,6 +479,10 @@ public:
         return cocos2d::CCString::createWithFormat("%s%i", iconNameValue(type), id)->getCString();
     }
 
+    std::string iconIdentifier(int id, UnlockType type) {
+        return cocos2d::CCString::createWithFormat("%s%02d", objectIdentifier(type), id)->getCString();
+    }
+
     void unlockIcon(int _id, IconType _type)
     {
         
@@ -637,6 +652,33 @@ public:
             break;
         }
     }
+
+    const char* nameForPath(PathType path)
+{
+    switch (path)
+    {
+    case PathType::Ice:
+        return "Ice";
+    case PathType::Posion:
+        return "Poison";
+    case PathType::Shadow:
+        return "Shadow";
+    case PathType::Lava:
+        return "Lava";
+    case PathType::Earth:
+        return "Earth";
+    case PathType::Blood:
+        return "Blood";
+    case PathType::Metal:
+        return "Metal";
+    case PathType::Light:
+        return "Light";
+    case PathType::Soul:
+        return "Souls";
+    default:
+        return "Fire";
+    }
+}
 
 };
 

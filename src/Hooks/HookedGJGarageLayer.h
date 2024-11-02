@@ -2,7 +2,7 @@
 
 bool(__fastcall* GJGarageLayer_init)(CCLayer*);
 bool __fastcall GJGarageLayer_init_H(CCLayer* _this) {
-    if (GJGarageLayer_init(_this)) return false;
+    if (!GJGarageLayer_init(_this)) return false;
 
 
     /*  background  */

@@ -6,14 +6,18 @@ auto base = redecore::getBase();
 
 DWORD WINAPI thread_func(void* hModule) { 
 
+    SetUnhandledExceptionFilter(ExceptionHandler); 
+
+    LSIconDataManager::sharedState()->removeGDAchievements();
+
     if (MH_Initialize() != MH_OK) {
         return 1;
     };
 
-    Lightsync->showConsole();
-
     /*  Sfx - Nightor level end */
     MusicDownloadManager::sharedState()->m_resourceSfxUnorderedSet.insert(6082);
+
+    Lightsync->showConsole();
 
     /* More icons */
     Lightsync->setItemLimit(IconType::Cube, 517);

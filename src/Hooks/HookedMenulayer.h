@@ -160,7 +160,7 @@ bool __fastcall MenuLayer_init_H(MenuLayerExt *_this)
     Lightsync->m_menuLayer = _this;
 
     if (!Lightsync->m_gameInit) {
-
+        LSIconDataManager::sharedState()->removeSpecialChestRewards();
         _this->m_mainMenu->setVisible(false);
         _this->m_exitMenu->setVisible(false);
 

@@ -357,6 +357,21 @@ public:
         };
     }
 
+    void logDictionariesFromArray(CCArray *arr, bool values)
+    {
+        for (int i = 0; i < arr->count(); i++)
+        {
+            auto dict = (CCDictionary*)arr->objectAtIndex(i);
+            auto keys = dict->allKeys();
+            CCString *key = (CCString *)keys->objectAtIndex(0);
+            CCString *value = (CCString *)dict->objectForKey(key->getCString());
+            if (values)
+                fmt::print("Key: {} Value: {} \n", key->getCString(), value->getCString());
+            else
+                fmt::print("Key: {} \n", key->getCString());
+        };
+    }
+
     void loadIcons(IconType type)
     {
         if (static_cast<int>(type) > 8)

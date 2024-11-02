@@ -10,4 +10,5 @@ void CreateAllHooks(uintptr_t base)
     Utils::CreateHook(base + 0x3130F0, MenuLayer_init_H, &MenuLayer_init);
     Utils::CreateHook(base + 0x9a300, CreatorLayer_init_H, &CreatorLayer_init);
     Utils::CreateHook(base + 0x261150, GJGarageLayer_init_H, &GJGarageLayer_init);
+    Utils::CreateHook(base + 0x269730, ItemInfoPopup_init_H, &ItemInfoPopup_init);
 }

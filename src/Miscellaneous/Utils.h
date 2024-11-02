@@ -76,4 +76,18 @@ namespace Utils {
 
         return true;
     }
+
+    void hideRandomChildFromParent(CCNode* parent) {
+        srand(time(NULL));
+
+         
+        int count = parent->getChildrenCount();
+
+        auto num = rand() % count + 1;
+
+        auto obj = reinterpret_cast<CCNode*>(parent->getChildren()->objectAtIndex(num - 1));
+        obj->setVisible(false);
+
+        fmt::print("{}:{}\n", num, count);
+    }
 }
