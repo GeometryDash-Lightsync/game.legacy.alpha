@@ -20,8 +20,9 @@ bool __fastcall CreatorLayer_init_H(CreatorLayerExt* _this) {
     oldbg->setVisible(false);
 
 
+    auto background = BackgroundSprite::createStandarBackground({66, 25, 36});
+    background->setTag(1000);
 
-    _this->m_background = BackgroundSprite::createStandarBackground({66, 25, 36});
-    _this->addChild(_this->m_background);
+    _this->addChild(background);
     return true;
 }

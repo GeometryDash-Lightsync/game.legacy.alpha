@@ -1,11 +1,8 @@
 #pragma once
 #include "../lightsync.h"
 
-class MenuLayerExt : public MenuLayer, LayerExtProtocol<MenuLayer> {
+class MenuLayerExt : public MenuLayer{
 public:
-    BackgroundSprite *m_background;
-    CCMenu *m_mainMenu;
-    CCMenu *m_exitMenu;
 
     void onSound(CCObject* sender) {
 

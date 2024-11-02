@@ -33,6 +33,9 @@ public:
     bool m_extraSettingsOpened = false;
     int m_lastOptionPage = 0;
 
+    int m_preloadStep = 0;
+    int m_requestAttempts = 0;
+
     int m_cubeLimit = 484;
     int m_shipLimit = 169;
     int m_ballLimit = 118;

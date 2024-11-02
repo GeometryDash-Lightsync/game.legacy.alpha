@@ -141,7 +141,7 @@ public:
 
 
         /*  scaling the bg */
-        ext->m_background->runAction(CCScaleTo::create(0, 2));
+        reinterpret_cast<CCNode*>(ext->getChildByTag(1000))->runAction(CCScaleTo::create(0, 2));
 
 
 		this->runAction(
@@ -162,9 +162,13 @@ public:
         /*  enter animation */
         auto ext = (MenuLayerExt*)Lightsync->m_menuLayer;
 
-        for (int i = 0; i < ext->m_mainMenu->getChildrenCount(); i++) {
+        auto background = (CCSprite*)ext->getChildByTag(1000);
+        auto mainMenu = (CCMenu*)ext->getChildByTag(1001);
+        auto exitMenu = (CCMenu*)ext->getChildByTag(1002);
 
-            auto children = reinterpret_cast<CCNode*>(ext->m_mainMenu->getChildren()->objectAtIndex(i));
+        for (int i = 0; i < mainMenu->getChildrenCount(); i++) {
+
+            auto children = reinterpret_cast<CCNode*>(mainMenu->getChildren()->objectAtIndex(i));
             auto pos = children->getPositionY();
 
             children->runAction(CCFadeTo::create(0, 0));
@@ -176,13 +180,13 @@ public:
 
         /*  showin menus */
 
-        ext->m_exitMenu->setVisible(true);
+        mainMenu->setVisible(true);
 
-        ext->m_mainMenu->setVisible(true);
+        exitMenu->setVisible(true);
 
         /*  bg anim    */
 
-        ext->m_background->runAction(CCEaseExponentialOut::create(CCScaleTo::create(5, 1)));
+       background->runAction(CCEaseExponentialOut::create(CCScaleTo::create(5, 1)));
 
 
         /*  first time the game was opened */

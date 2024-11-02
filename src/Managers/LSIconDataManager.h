@@ -24,10 +24,7 @@ public:
         int total = 0;
         for (int i = 0; i < m_identifiersArray.size(); i++)
         {
-            if (
-                AchievementManager::sharedState()
-                    ->percentForAchievement(
-                        m_identifiersArray[i].c_str()) == 100)
+            if (AchievementManager::sharedState()->percentForAchievement(m_identifiersArray[i].c_str()) == 100)
                 total++;
         }
         return total;

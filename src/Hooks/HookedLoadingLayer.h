@@ -1,14 +1,15 @@
 #include "../lightsync.h"
 
-class LoadingLayerExt : public LoadingLayer, LayerExtProtocol<LoadingLayer> {
+class LoadingLayerExt : public LoadingLayer {
 public:
-    CCLabelBMFont* m_loadingInfoLabel;
 
-    int m_preloadStep = 0;
-    int m_requestAttempts = 0;
+
+    CCLabelBMFont* getLoadingLabel() {
+        return (CCLabelBMFont*) this->getChildByTag(1000);
+    }
 
     void checkForUpdates() {
-        m_loadingInfoLabel->setString("Checking For Updates");
+        this->getLoadingLabel()->setString("Checking For Updates");
 
         //if (m_requestAttempts < 0 && m_requestAttempts > 600) m_requestAttempts = 0;
         
@@ -30,11 +31,11 @@ public:
 
     void verifyResources()
     {
-        if (m_preloadStep < 0 || m_preloadStep > 7) m_preloadStep = 0;
+        if (Lightsync->m_preloadStep < 0 || Lightsync->m_preloadStep > 7) Lightsync->m_preloadStep = 0;
 
-        if (this->m_preloadStep < 7) {
+        if (Lightsync->m_preloadStep < 7) {
 
-            if (m_loadingInfoLabel) m_loadingInfoLabel->setString("Verifying Resources");
+            if (this->getLoadingLabel()) this->getLoadingLabel()->setString("Verifying Resources");
 
             std::string hash1 = Lightsync->generateHashForFile("Lightsync.exe");
             std::string realHash1 = "e11daa6e90fd68684a1ee195f0d84760dae61aef71990c8b58cdf974671f4510";
@@ -46,7 +47,7 @@ public:
             std::string realHash3 = "842a3f20177eb44ac0413116c66430f9508bf88a05fcdab14284a566d5d0774f";
 
 
-            switch (this->m_preloadStep)
+            switch (Lightsync->m_preloadStep)
             {
             case 1:
                 hash1 = Lightsync->generateHashForFile("jpeg62.dll");
@@ -129,7 +130,7 @@ public:
                 Lightsync->m_screenEnabled = true;
             }
 
-            m_preloadStep += 1;
+            Lightsync->m_preloadStep += 1;
 
             this->runAction(
                 CCSequence::createWithTwoActions(
@@ -138,7 +139,7 @@ public:
                 )
             );
         }
-        else if (m_preloadStep == 7) {
+        else if (Lightsync->m_preloadStep == 7) {
 
             this->runAction(
                 CCSequence::createWithTwoActions(
@@ -151,14 +152,14 @@ public:
     }
 
         void doRequest(extension::CCHttpClient* sender, extension::CCHttpResponse* response) {
-        m_requestAttempts++;
+        Lightsync->m_requestAttempts++;
 
         if (!response) {
             Lightsync->m_updateCallbackResponse = -2;
             this->verifyResources();
         }
         if (!response->isSucceed()) {
-            if (response->getResponseCode() == -1 && m_requestAttempts < 500) {
+            if (response->getResponseCode() == -1 && Lightsync->m_requestAttempts < 500) {
 	        this->checkForUpdates();
             }
             else {
@@ -183,12 +184,12 @@ public:
 
     void preloadIcons() {
 
-        UnlockType item = gm->IconToUnlock(static_cast<IconType>(m_preloadStep - 8));
+        UnlockType item = gm->IconToUnlock(static_cast<IconType>(Lightsync->m_preloadStep - 8));
 
-        if (m_loadingInfoLabel && m_preloadStep < 16) 
-            m_loadingInfoLabel->setString(fmt::format("Preloading Icons: {}s", gm->getItemName(item)).c_str());
+        if (this->getLoadingLabel() && Lightsync->m_preloadStep < 16) 
+            this->getLoadingLabel()->setString(fmt::format("Preloading Icons: {}s", gm->getItemName(item)).c_str());
 
-        switch (m_preloadStep)
+        switch (Lightsync->m_preloadStep)
         {
         case 7: Lightsync->loadIcons(IconType::Cube); break;
         case 8: Lightsync->loadIcons(IconType::Ship); break;
@@ -202,8 +203,8 @@ public:
         case 16: LSIconDataManager::sharedState()->setData(); break;     
         }
 
-        if (m_preloadStep < 17) {
-            m_preloadStep++;
+        if (Lightsync->m_preloadStep < 17) {
+            Lightsync->m_preloadStep++;
 
             this->runAction(
                 CCSequence::createWithTwoActions(
@@ -214,7 +215,7 @@ public:
 
         }
         else {
-            m_loadingInfoLabel->setString("Loading Textures");
+            this->getLoadingLabel()->setString("Loading Textures");
 
             this->runAction(
                 CCSequence::createWithTwoActions(
@@ -230,9 +231,9 @@ public:
 
 void(__fastcall* LoadingLayer_loadAssets)(LoadingLayerExt*);
 void __fastcall LoadingLayer_loadAssets_H(LoadingLayerExt* _this) {
-    _this->m_requestAttempts = 0;
+    Lightsync->m_requestAttempts = 0;
 
-    if (!_this->m_fromRefresh && _this->m_preloadStep != 17) _this->checkForUpdates();
+    if (!_this->m_fromRefresh && Lightsync->m_preloadStep != 17) _this->checkForUpdates();
     else LoadingLayer_loadAssets(_this);
 
 }
@@ -263,15 +264,17 @@ bool __fastcall LoadingLayer_init_H(LoadingLayerExt* _this, bool fromRefresh) {
 
     if (fromRefresh) loadingText = "Reloading Textures...";
 
-    _this->m_loadingInfoLabel = CCLabelBMFont::create(
+    auto InfoLabel = CCLabelBMFont::create(
         loadingText,
         "goldFont.fnt"
     );
 
-    _this->m_loadingInfoLabel->setScale(.5f);
-    _this->m_loadingInfoLabel->setAnchorPoint({ .5f, .5f });
-    _this->m_loadingInfoLabel->setPosition({ size.width / 2, 85 });
-    _this->addChild(_this->m_loadingInfoLabel, 9);
+    InfoLabel->setScale(.5f);
+    InfoLabel->setAnchorPoint({ .5f, .5f });
+    InfoLabel->setPosition({ size.width / 2, 85 });
+    InfoLabel->setTag(1000);
+    
+    _this->addChild(InfoLabel, 9);
 
     auto bgSmall = CCLayerColor::create({ 0,0, 0, 255 }, 215, 5);
     bgSmall->ignoreAnchorPointForPosition(false);

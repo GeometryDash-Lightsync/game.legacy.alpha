@@ -41,18 +41,20 @@ bool __fastcall MenuLayer_init_H(MenuLayerExt *_this)
 
     /* new menu */
 
-    _this->m_background = BackgroundSprite::create("GJ_Gradient03.png");
-    _this->m_background->setColor(Utils::grayScaleColor(25));
+    auto background = BackgroundSprite::create("GJ_Gradient03.png");
+    background->setColor(Utils::grayScaleColor(25));
+    background->setTag(1000);
     
 
-    _this->m_background->setAnchorPoint({.5f, .5f});
-    _this->m_background->setPosition(size / 2);
-    _this->m_background->setScaleY(_this->m_background->getScaleY() * 1.2f);
+    background->setAnchorPoint({.5f, .5f});
+    background->setPosition(size / 2);
+    background->setScaleY(background->getScaleY() * 1.2f);
 
-    _this->addChild(_this->m_background, -1);
+    _this->addChild(background, -1);
 
-    _this->m_mainMenu = CCMenu::create();
-    _this->m_mainMenu->setPosition(CCPointZero);
+    auto mainMenu = CCMenu::create();
+    mainMenu->setPosition(CCPointZero);
+    mainMenu->setTag(1001);
 
     /* icons */
 
@@ -80,7 +82,7 @@ bool __fastcall MenuLayer_init_H(MenuLayerExt *_this)
 
     playBtn->setPosition( size / 2);
 
-    _this->m_mainMenu->addChild(playBtn);
+    mainMenu->addChild(playBtn);
 
     /* garage Button */
 
@@ -105,7 +107,7 @@ bool __fastcall MenuLayer_init_H(MenuLayerExt *_this)
     garageBtn->addChild(iconDot);
 
 
-    _this->m_mainMenu->addChild(garageBtn);
+    mainMenu->addChild(garageBtn);
 
 
 
@@ -120,9 +122,9 @@ bool __fastcall MenuLayer_init_H(MenuLayerExt *_this)
 
     creatorBtn->setPosition({size.width - 120, size.height / 2 - 10});
 
-    _this->m_mainMenu->addChild(creatorBtn);
+    mainMenu->addChild(creatorBtn);
 
-    _this->m_mainMenu->runAction(
+    mainMenu->runAction(
         CCRepeatForever::create(
             CCSequence::createWithTwoActions(
                 CCEaseInOut::create(CCMoveTo::create(2.0f, {0, 5}), 1.8f),
@@ -131,10 +133,11 @@ bool __fastcall MenuLayer_init_H(MenuLayerExt *_this)
         )
     );
 
-    _this->addChild(_this->m_mainMenu);
+    _this->addChild(mainMenu);
 
-    _this->m_exitMenu = CCMenu::create();
-    _this->m_exitMenu->setPosition(0, 0);
+    auto exitMenu = CCMenu::create();
+    exitMenu->setPosition(0, 0);
+    exitMenu->setTag(1002);
 
     auto exitSpr = CCSprite::createWithSpriteFrameName("GJ_closeBtn_001.png");
     exitSpr->setScale(.7f);
@@ -148,10 +151,10 @@ bool __fastcall MenuLayer_init_H(MenuLayerExt *_this)
     );
 
     exitBtn->setPosition({ size.width - 20, size.height - 25 });
-    _this->m_exitMenu->addChild(exitBtn);
+    exitMenu->addChild(exitBtn);
 
 
-    _this->addChild(_this->m_exitMenu);
+    _this->addChild(exitMenu);
 
     auto main = MainMenuLayer::create();
 
@@ -162,8 +165,8 @@ bool __fastcall MenuLayer_init_H(MenuLayerExt *_this)
 
     if (!Lightsync->m_gameInit) {
         LSIconDataManager::sharedState()->removeSpecialChestRewards();
-        _this->m_mainMenu->setVisible(false);
-        _this->m_exitMenu->setVisible(false);
+        mainMenu->setVisible(false);
+        exitMenu->setVisible(false);
 
         Lightsync->m_gameInit = true;
         

@@ -125,6 +125,17 @@ enum {
  - Each node has a camera. By default it points to the center of the CCNode.
  */
 
+#ifdef GD_IS_DLL
+    #ifdef _EXPORTING
+        #define GD_DLL __declspec(dllexport)
+    #else
+        #define GD_DLL __declspec(dllimport)
+    #endif
+#else
+    #define GD_DLL
+#endif
+
+
 class CC_DLL CCNode : public CCObject
 {
 public:
@@ -1412,6 +1423,22 @@ public:
 	void setUseChildIndex(bool);
 	void qsortAllChildrenWithIndex();
 
+    /**
+     * Get the string ID of this node
+     * @returns The ID, or an empty string if the node has no ID.
+     * @note Geode addition
+     */
+    GD_DLL std::string getID();
+    /**
+     * Set the string ID of this node. String IDs are a Geode addition 
+     * that are much safer to use to get nodes than absolute indexes
+     * @param id The ID of the node, recommended to be in kebab case 
+     * without any spaces or uppercase letters. If the node is added 
+     * by a mod, use the _spr literal to append the mod ID to it
+     * @note Geode addition
+     */
+    GD_DLL void setID(std::string const& id);
+
 private:
     /// lazy allocs
     void childrenAlloc(void);
@@ -1508,6 +1535,8 @@ protected:
     bool m_bUnkBool2;
 
     public:
+
+
     void setContentWidth(float width);
     void setContentHeight(float height);
     float getContentHeight() const;
