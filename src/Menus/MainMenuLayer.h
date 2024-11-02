@@ -380,7 +380,7 @@ public:
 
 	    if (gm->getGameVariable("LS-ClockFormat"))
 	    {
-		    m_timeString = fmt::format("{}:{:02}", systemTime[0], systemTime[1]);
+		    m_timeString = fmt::format("{:02}:{:02}", systemTime[0], systemTime[1]);
 
 
 		
@@ -397,10 +397,13 @@ public:
 
             int hourFormat = systemTime[0]; 
             if (hourFormat > 12) hourFormat -= 12;
+            m_timeFormatString = fmt::format("{}", (systemTime[0] > 11) ? "PM" : "AM" );
+
+            if (hourFormat == 0) hourFormat == 12;
 
 		    m_timeString = fmt::format("{}:{:02}", hourFormat, systemTime[1]);
 
-		    m_timeFormatString = fmt::format("{}", (systemTime[0] > 11) ? "PM" : "AM" ); //CCString::createWithFormat("%s", (systemTime[0] > 11) ? "PM" : "AM")->getCString();
+		    
 
 		    m_timeFormatLabel->setString(m_timeFormatString.c_str());
 		    m_timeFormatLabel->setVisible(true);

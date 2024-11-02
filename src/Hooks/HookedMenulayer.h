@@ -43,10 +43,11 @@ bool __fastcall MenuLayer_init_H(MenuLayerExt *_this)
 
     _this->m_background = BackgroundSprite::create("GJ_Gradient03.png");
     _this->m_background->setColor(Utils::grayScaleColor(25));
+    
 
     _this->m_background->setAnchorPoint({.5f, .5f});
     _this->m_background->setPosition(size / 2);
-
+    _this->m_background->setScaleY(_this->m_background->getScaleY() * 1.2f);
 
     _this->addChild(_this->m_background, -1);
 
