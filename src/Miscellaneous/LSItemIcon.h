@@ -52,7 +52,7 @@ public:
             case UnlockType::kItem: texType = "gjItem"; break;
             }
 
-            std::string texture = fmt::format("{}{:02}_001.png", texType, id);
+            std::string texture = fmt::format("{}_{:02}_001.png", texType, id);
 
             sprite = CCSprite::createWithSpriteFrameName(texture.c_str());
             this->addChild(sprite);
