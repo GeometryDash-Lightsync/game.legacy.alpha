@@ -186,7 +186,7 @@ public:
 
         /*  bg anim    */
 
-       background->runAction(CCEaseExponentialOut::create(CCScaleTo::create(5, 1)));
+        background->runAction(CCEaseExponentialOut::create(CCScaleTo::create(5, 1)));
 
 
         /*  first time the game was opened */
