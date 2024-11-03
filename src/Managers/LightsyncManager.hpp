@@ -26,7 +26,6 @@ public:
 
     int m_updateCallbackResponse = -1;
     bool m_needUpdate = false;
-    std::string m_versionCode = "Awk01";
 
     bool m_fromReload = false;
 
@@ -50,7 +49,8 @@ public:
     int m_colorLimit = 106;
     int m_robotLimit = 68;
 
-    std::string m_version = "Version 1.0 pre-release 1";
+    std::string m_version = "Version 1.0 pre-release 2";
+    std::string m_updateCheckVersion = " ";
 
     static LightsyncManager *sharedState();
 

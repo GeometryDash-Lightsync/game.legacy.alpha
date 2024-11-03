@@ -173,9 +173,11 @@ public:
         std::vector<char>* buffer = response->getResponseData();
         std::string responseData(buffer->begin(), buffer->end());
 
-        Lightsync->m_needUpdate = (responseData.compare(Lightsync->m_versionCode) == 0);
+        Lightsync->m_needUpdate = (responseData.compare(Lightsync->m_version + "\n") != 0);
 
         Lightsync->m_updateCallbackResponse = 0;
+
+        Lightsync->m_updateCheckVersion = responseData;
 
         this->verifyResources();
         

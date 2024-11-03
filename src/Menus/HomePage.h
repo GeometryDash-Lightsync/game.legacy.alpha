@@ -1,7 +1,7 @@
 #pragma once
 #include "../lightsync.h"
 
-class HomePage : public CCLayer {
+class HomePage : public CCLayer, FLAlertLayerProtocol {
 public:
     CCLayer* m_mainLayer;
     CCMenu* m_mainMenu;
@@ -10,6 +10,7 @@ public:
     CCLabelBMFont* m_infoLabel;
 
     bool m_canPressKey;
+    bool m_updatePending;
 
     bool init() {
 
@@ -88,6 +89,24 @@ public:
             )
         );
 
+        /*  Popups */
+        
+        if ((Lightsync->m_needUpdate || Lightsync->m_updateCallbackResponse != 0) && Lightsync->isConnectetToInternet())
+            this->runAction(CCCallFunc::create(this, callfunc_selector(HomePage::showUpdatePopup)));
+
+        if (Lightsync->m_screenEnabled) this->runAction(CCCallFunc::create(this, callfunc_selector(HomePage::showMofiedPopup)));
+
+
+        std::ifstream file;
+
+        file.open("hackpro.dll");
+		if (file) runAction(CCCallFunc::create(this, callfunc_selector(HomePage::showCheatScreen)));
+		file.close();
+
+		file.open("hackproldr.dll");
+		if (file) runAction(CCCallFunc::create(this, callfunc_selector(HomePage::showCheatScreen)));
+		file.close();
+
         return true;
     }
 
@@ -99,6 +118,14 @@ public:
     void keyDown(cocos2d::enumKeyCodes key) {
 
         if (key != enumKeyCodes::KEY_Escape && m_canPressKey) this->startGame();
+    }
+
+    virtual bool ccTouchBegan(cocos2d::CCTouch* touch, cocos2d::CCEvent* event) override {
+        cocos2d::CCPoint location = touch->getLocation();
+        fmt::print("x {} y {}\n", location.x, location.y);
+
+        //cocos2d::CCLog("Mouse click or touch began at x: %f, y: %f", location.x, location.y);
+        return true;
     }
 
     void startGame() {
@@ -158,6 +185,58 @@ public:
 
     }
 
+    void showMofiedPopup() {
+        FLAlertLayer::create(
+	        HomePage::create(),
+	        "Oopsie...",
+	        "It seems that some important files are corrupted or had been modified.\n"
+	        "Please open the repair assistant and relaunch the game.",
+	        "OK", nullptr
+        )->show(); 
+    }
+
+    void showCheatScreen()	{
+		FLAlertLayer::create(
+			HomePage::create(),
+			"Get out of here cheater!",
+			"It seems we detected one or more files related to <cr>cheats</c> on the game,"
+			"please delete these files, otherwise you will not be able to play :)",
+			"OK", nullptr
+		)->show();
+	}
+
+    void showUpdatePopup() {
+
+        const char* title = "Update requiered";
+        std::string desc = fmt::format("<cy>A new update has been released!</c>\n"
+        "Please update your game in the launcher for continue playing.\n\n"
+        "New version: {}",
+        Lightsync->m_updateCheckVersion
+        );
+        FLAlertLayerProtocol* protocol = nullptr;
+
+        if (Lightsync->m_updateCallbackResponse != 0) {
+            title = "Oh no...";
+            desc = fmt::format("An error occured while checking for updates, please try it again later."
+            " It could be a connection problem.\n\n"
+            "Error code: {}",
+            Lightsync->m_updateCallbackResponse
+            );
+        }
+
+        if (Lightsync->m_needUpdate) protocol = HomePage::create();
+
+        FLAlertLayer::create(
+            protocol,
+            title,
+            desc,
+            "OK", nullptr
+        )->show();
+
+    }
+
+    void FLAlert_Clicked(FLAlertLayer*, bool btn2) { ccDir->end(); }
+
     void runMenulayerEnterAnimation() {
         /*  enter animation */
         auto ext = (MenuLayerExt*)Lightsync->m_menuLayer;
@@ -186,7 +265,7 @@ public:
 
         /*  bg anim    */
 
-        background->runAction(CCEaseExponentialOut::create(CCScaleTo::create(5, 1)));
+        background->runAction(CCEaseExponentialOut::create(CCScaleTo::create(5, 1, 1.2f)));
 
 
         /*  first time the game was opened */

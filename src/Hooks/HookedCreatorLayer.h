@@ -2,9 +2,9 @@
 
 
 
-bool(__fastcall* CreatorLayer_init)(CreatorLayerExt*);
+bool(__fastcall* CreatorLayer_init)(CreatorLayer*);
 
-bool __fastcall CreatorLayer_init_H(CreatorLayerExt* _this) {
+bool __fastcall CreatorLayer_init_H(CreatorLayer* _this) {
     if (!CreatorLayer_init(_this)) return false;
 
     auto size = ccDir->getWinSize();
