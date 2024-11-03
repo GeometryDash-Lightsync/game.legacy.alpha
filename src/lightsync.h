@@ -27,7 +27,6 @@ using namespace cocos2d;
 #include "Miscellaneous/LSLevelTools.h"
 #include "Miscellaneous/LSItemIcon.h"
 
-#include "LayerExt/CreatorLayerExt.h"
 #include "LayerExt/MenuLayerExt.h"
 
 #include "Menus/HomePage.h"
