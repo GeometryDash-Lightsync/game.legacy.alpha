@@ -1,5 +1,5 @@
 # Lightsync
-This is the source code of the GDPS "Geometry Dash Lightsync (legacy)" for the version 1.0.
+This is the source code of the GDPS "Geometry Dash Lightsync (legacy)" for the version 1.0 using my own version of the deprecated SDK "gd.h" for the version 2.200.
 
 **Note: This code was written in 2023, so there are a lot of bad practices**
 
