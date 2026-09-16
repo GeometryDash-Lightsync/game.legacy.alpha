@@ -1,7 +1,7 @@
 # Lightsync
-This is the source code of the GDPS "Geometry Dash Lightsync".
+This is the source code of the GDPS "Geometry Dash Lightsync" for the version 1.0.
 
-**Note: Most of the code was written by me months ago there are some things kinda guffy ahh ☠️**
+**Note: This code was written in 2023, so there are a lot of bad practices**
 
 # Requisites
 
